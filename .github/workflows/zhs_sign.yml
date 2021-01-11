@@ -1,0 +1,26 @@
+name: "zhs_sign"
+on:
+  push:
+    branches:
+    - master
+  schedule:
+    - cron: '0 1 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v2
+
+      - name: set up python
+        uses: action/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: run cmd
+        env:
+          ZHS_COOKIE: ${{ ZHS_COOKIE }}
+          PUSH_KEY: ${{ PUSH_KEY }}
+        run: python main.py
+

@@ -24,7 +24,18 @@ Fork [此项目](https://github.com/xiaokexiang/zhs_sign) ，并添加如下`Sec
 
 Cookie的复制方法，浏览器访问[网站（国内ip无法访问）](https://zhs.today/user)并登录，`F12`或`Ctrl + Shift + i`打开浏览器控制台，选择`Console`，输入命令：`copy(document.cookie)`并回车就会自动复制。
 
+### Step3
+
+推送信息至微信基于[server酱](http://sc.ftqq.com/3.version)，右上角使用github账号登录，然后点击发送消息菜单，并复制<b>`SCKEY`</b>
+
+### Step4
+
+1. 基于`Github action`实现脚本自动执行，如果不清楚`Github action`，点击[此处](http://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)查看入门教程。
+2. 定时任务执行基于`Cron`，如果不清楚点击[此处](https://leejay.top/post/linux%E4%B8%8Bcron%E5%AE%9A%E6%97%B6%E5%99%A8/)了解。
+3. 可以自行编辑`.github/workflows/zhs_sign.yml`中的`cron: '0 1 * * *'`配置来修改脚本的触发事件，
+也可以通过修改`README.md`文件，触发push的操作来执行脚本。
+
 ### TODO
 
-- 基于Github Action的定时执行
+- ~~基于Github Action的定时执行~~
 - 基于账户密码的登录，Cookie具有一周的时效，免于定期替换Cookie
