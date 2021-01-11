@@ -13,7 +13,7 @@
 
 ### Step1
 
-Fork [此项目](https://github.com/xiaokexiang/zhs_sign) ，并添加如下`Secret`到<b>`Setting -> Secret`</b>中：
+Fork [此项目](https://github.com/xiaokexiang/zhs_sign) ，并添加如下`Secret`到<b>`Settings -> Secrets`</b>中：
 
 | key                 | 作用                     |
 | ------------------- | ------------------------ |
