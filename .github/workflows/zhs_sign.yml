@@ -20,7 +20,7 @@ jobs:
           pip install -r requirements.txt
       - name: run cmd
         env:
-          ZHS_COOKIE: ${{ ZHS_COOKIE }}
-          PUSH_KEY: ${{ PUSH_KEY }}
+          ZHS_COOKIE: ${{ secrets.ZHS_COOKIE }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
         run: python main.py
 
