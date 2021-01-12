@@ -1,0 +1,29 @@
+name: zhs sign
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '5 16 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: run cmd
+      env:
+        ZHS_COOKIE: ${{ secrets.ZHS_COOKIE }}
+        PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      run: python main.py
