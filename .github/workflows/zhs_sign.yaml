@@ -2,7 +2,7 @@ name: "zhs_sign"
 on:
   push:
     branches:
-    - master
+      - main
   schedule:
     - cron: '* * * * *'
 jobs:
