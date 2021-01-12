@@ -18,6 +18,7 @@ def push(title, desc, _secret_key_):
     if resp.status_code == 200 and parse(resp.text, 'errmsg', 'success'):
         print('push message succeed!')
     else:
+        print(resp.content)
         print('push message failed!')
 
 
