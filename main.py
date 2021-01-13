@@ -57,7 +57,7 @@ if __name__ == '__main__':
     sign = Sign()
     msg = ''
     _response_ = sign.check_in()
-    print(_response_.text)
+    print(dict(json.loads(_response_.text)).get('msg'))
     if _response_ is None:
         msg = '###抱歉，今日签到失败！ \r' + _response_.reason
     else:
