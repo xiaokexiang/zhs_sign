@@ -28,7 +28,7 @@ def parse(source, key, res):
         return None
     body = dict(json.loads(source))
     value = body.get(key)
-    return (False, True)[value == res or str(value).index(res) > 0]
+    return (False, True)[value == res or res in value]
 
 
 class Sign:
@@ -57,6 +57,7 @@ if __name__ == '__main__':
     sign = Sign()
     msg = ''
     _response_ = sign.check_in()
+    print(_response_.text)
     if _response_ is None:
         msg = '###抱歉，今日签到失败！ \r' + _response_.reason
     else:
@@ -67,4 +68,4 @@ if __name__ == '__main__':
             print("check in success!")
     secret_key = os.environ.get('PUSH_KEY')
     if isinstance(secret_key, str) and len(secret_key) > 0:
-        push('Vpn自动签到', msg, secret_key)
+        push('科学上网自动签到', msg, secret_key)
