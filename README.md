@@ -38,4 +38,3 @@ Cookie的复制方法，浏览器访问[网站（国内ip无法访问）](https:
 ### TODO
 
 - ~~基于Github Action的定时执行~~
-- 基于账户密码的登录，Cookie具有一周的时效，免于定期替换Cookie
