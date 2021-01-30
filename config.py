@@ -12,8 +12,8 @@ HEADERS = {
                   'Chrome/87.0.4280.141 Safari/537.36 Edg/87.0.664.75',
     'x-requested-with': 'XMLHttpRequest'
 }
-PROXY_LOCK = False
-PROXIES = {'https': 'https://89.204.214.142:8080'}
+PROXY_LOCK = True
+PROXIES = {}
 PROXY_URL = 'https://ip.ihuan.me'
 CHECK_IN_URL = 'https://zhs.today/user/checkin'
 PUSH_URL = 'http://sc.ftqq.com/{0}.send'
