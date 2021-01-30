@@ -12,10 +12,10 @@ def now():
 
 
 # 基于server酱推送到微信
-def push(title, desc, _secret_key_):
+def push(caption, desc, _secret_key_):
     url = config.PUSH_URL.format(_secret_key_)
     session = requests.session()
-    data = {'text': title, 'desp': desc}
+    data = {'text': caption, 'desp': desc}
     resp = session.post(url, data)
     if resp.status_code == 200 and parse(resp.text, 'errmsg', 'success'):
         print('push message succeed!')
@@ -62,15 +62,15 @@ if __name__ == '__main__':
     title = ''
     _response_ = sign.check_in()
     if _response_.status_code != 200:
-        title = '###抱歉，今日签到失败！代理问题：' + str(_response_.status_code)
+        title = 'VPN签到： 今日签到失败！代理问题：' + str(_response_.status_code) + ' \r'
     elif is_html(_response_.text):
-        title = "###抱歉，你的cookie已经失效！"
+        title = "VPN签到：你的cookie已经失效！\r"
     else:
         print(dict(json.loads(_response_.text)).get('msg'))
         if parse(_response_.text, 'msg', '已经'):
-            title = '###您已经签到过，无需再签到！ \r' + now()
+            title = 'VPN签到：您已经签到过，无需再签到！ \r'
         else:
-            title = '###恭喜您，今日签到成功！ \r' + now()
+            title = 'VPN签到：恭喜您，今日签到成功！ \r'
     print(title)
     secret_key = os.environ.get('PUSH_KEY')
     if isinstance(secret_key, str) and len(secret_key) > 0:
