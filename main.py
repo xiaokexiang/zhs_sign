@@ -3,6 +3,8 @@ import json
 import os
 import requests
 import time
+from lxml import etree
+from proxy import IpProxy
 
 
 def now():
@@ -31,10 +33,17 @@ def parse(source, key, res):
     return (False, True)[value == res or res in value]
 
 
+# 简单判断是不是html
+def is_html(html):
+    return len(etree.HTML(html).xpath("/html/head/title")) > 0
+
+
 class Sign:
 
     # 初始化header相关参数
     def __init__(self):
+        if config.PROXY_LOCK:
+            IpProxy(config).proxy()
         self.session = requests.Session()
         self.session.headers = config.HEADERS
         user_cookie = os.environ.get('ZHS_COOKIE')
@@ -42,30 +51,27 @@ class Sign:
             print('No arg: ZHS_COOKIE')
             exit(101)
         self.session.headers['Cookie'] = user_cookie
-        self.session.proxies = config.PROXIES
 
     # 执行签到逻辑
     def check_in(self):
-        resp = self.session.post(config.CHECK_IN_URL)
-        if resp.status_code == 200:
-            return resp
-        else:
-            return None
+        return self.session.post(config.CHECK_IN_URL, proxies=config.PROXIES, timeout=10)
 
 
 if __name__ == '__main__':
     sign = Sign()
-    msg = ''
+    title = ''
     _response_ = sign.check_in()
-    print(dict(json.loads(_response_.text)).get('msg'))
-    if _response_ is None:
-        msg = '###抱歉，今日签到失败！ \r' + _response_.reason
+    if _response_.status_code != 200:
+        title = '###抱歉，今日签到失败！代理问题：' + _response_.status_code
+    elif is_html(_response_.text):
+        title = "###抱歉，你的cookie已经失效！"
     else:
+        print(dict(json.loads(_response_.text)).get('msg'))
         if parse(_response_.text, 'msg', '已经'):
-            msg = '###您已经签到过，无需再签到！ \r' + now()
+            title = '###您已经签到过，无需再签到！ \r' + now()
         else:
-            msg = '###恭喜您，今日签到成功！ \r' + now()
+            title = '###恭喜您，今日签到成功！ \r' + now()
             print("check in success!")
     secret_key = os.environ.get('PUSH_KEY')
     if isinstance(secret_key, str) and len(secret_key) > 0:
-        push('科学上网自动签到', msg, secret_key)
+        push(title, now(), secret_key)
