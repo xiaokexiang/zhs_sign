@@ -12,7 +12,6 @@ HEADERS = {
                   'Chrome/87.0.4280.141 Safari/537.36 Edg/87.0.664.75',
     'x-requested-with': 'XMLHttpRequest'
 }
-PROXY_LOCK = True
 PROXIES = {}
 PROXY_URL = 'https://ip.ihuan.me'
 CHECK_IN_URL = 'https://zhs.today/user/checkin'

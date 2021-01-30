@@ -42,7 +42,7 @@ class Sign:
 
     # 初始化header相关参数
     def __init__(self):
-        if config.PROXY_LOCK:
+        if os.environ.get('PROXY_LOCK') is not None and os.environ.get('PROXY_LOCK'):
             IpProxy(config).proxy()
         self.session = requests.Session()
         self.session.headers = config.HEADERS
@@ -54,7 +54,7 @@ class Sign:
 
     # 执行签到逻辑
     def check_in(self):
-        return self.session.post(config.CHECK_IN_URL, proxies=config.PROXIES, timeout=10)
+        return self.session.post(config.CHECK_IN_URL, proxies=config.PROXIES, timeout=20)
 
 
 if __name__ == '__main__':
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     title = ''
     _response_ = sign.check_in()
     if _response_.status_code != 200:
-        title = '###抱歉，今日签到失败！代理问题：' + _response_.status_code
+        title = '###抱歉，今日签到失败！代理问题：' + str(_response_.status_code)
     elif is_html(_response_.text):
         title = "###抱歉，你的cookie已经失效！"
     else:
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             title = '###您已经签到过，无需再签到！ \r' + now()
         else:
             title = '###恭喜您，今日签到成功！ \r' + now()
-            print("check in success!")
+    print(title)
     secret_key = os.environ.get('PUSH_KEY')
     if isinstance(secret_key, str) and len(secret_key) > 0:
         push(title, now(), secret_key)

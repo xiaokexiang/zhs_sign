@@ -19,6 +19,7 @@ Fork [此项目](https://github.com/xiaokexiang/zhs_sign) ，并添加如下`Sec
 | ------------------- | ------------------------ |
 | <b>`ZHS_COOKIE`</b> | 用于科学上网签到的cookie |
 | <b>`PUSH_KEY`</b>   | 用于推送到微信的密钥     |
+| <b>`PROXY_LOCK`</b>   | True/False 开启、关闭代理     |
 
 ### Step2
 

@@ -21,7 +21,7 @@ class IpProxy:
             convert = root.xpath('/html/body/div[2]/div[2]/table/tbody/tr')
             for ip in convert:
                 i = ip.xpath('td')
-                if i[4].text == '支持' and i[5].text == '支持' and '中国' not in i[2].xpath('a'):  # 国外 & https & POST
+                if i[4].text == '不支持' and i[5].text == '支持' and '中国' not in i[2].xpath('a'):  # 国外 & https & POST
                     href = dict(i[0].xpath('a')[0].attrib).get('href')
                     ips.append(self.config.PROXY_URL + href)
             return ips
@@ -31,7 +31,7 @@ class IpProxy:
             resp = requests.session().get(ip)
             time.sleep(2)
             if resp.status_code == 200:
-                proxies = ('https://' + dict(etree.HTML(resp.text).xpath('//*[@id="ip"]')[0].attrib).get('value'))
-                self.config.PROXIES['https'] = proxies
+                proxies = ('http://' + dict(etree.HTML(resp.text).xpath('//*[@id="ip"]')[0].attrib).get('value'))
+                self.config.PROXIES['http'] = proxies
                 break
         print(self.config.PROXIES)
