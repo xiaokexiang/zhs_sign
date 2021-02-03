@@ -26,4 +26,5 @@ jobs:
       env:
         ZHS_COOKIE: ${{ secrets.ZHS_COOKIE }}
         PUSH_KEY: ${{ secrets.PUSH_KEY }}
+        BARK_PUSH_KEY: ${{ secrets.BARK_PUSH_KEY }}
       run: python main.py
