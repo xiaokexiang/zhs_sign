@@ -19,6 +19,7 @@ Fork [此项目](https://github.com/xiaokexiang/zhs_sign) ，并添加如下`Sec
 | ------------------- | ------------------------ |
 | <b>`ZHS_COOKIE`</b> | 用于科学上网签到的cookie |
 | <b>`PUSH_KEY`</b>   | 用于推送到微信的密钥     |
+| <b>`BARK_PUSH_KEY`</b>   | 基于bark的推送    |
 | <b>`PROXY_LOCK`</b>   | True/False 开启、关闭代理     |
 
 ### Step2
@@ -27,8 +28,8 @@ Cookie的复制方法，浏览器访问[网站（国内ip无法访问）](https:
 
 ### Step3
 
-推送信息至微信基于[server酱](http://sc.ftqq.com/3.version)，右上角使用github账号登录，然后点击发送消息菜单，并复制<b>`SCKEY`</b>
-
+- 推送信息至微信基于[server酱](http://sc.ftqq.com/3.version)，右上角使用github账号登录，然后点击发送消息菜单，并复制<b>`SCKEY`</b>
+- 也支持基于[bark](https://github.com/Finb/Bark)的推送，可以推送到手机端，需要下载app
 ### Step4
 
 1. 基于`Github action`实现脚本自动执行，如果不清楚`Github action`，点击[此处](http://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html)查看入门教程。
@@ -39,4 +40,4 @@ Cookie的复制方法，浏览器访问[网站（国内ip无法访问）](https:
 ### TODO
 
 - ~~基于Github Action的定时执行~~
-
+- ~~基于bark推送信息（server前途未卜）~~

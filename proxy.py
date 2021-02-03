@@ -1,5 +1,8 @@
 import time
 
+"""
+基于xpath爬取html网页的代理数据，一天一次，你好我也好
+"""
 from lxml import etree
 import requests
 
@@ -21,7 +24,7 @@ class IpProxy:
             convert = root.xpath('/html/body/div[2]/div[2]/table/tbody/tr')
             for ip in convert:
                 i = ip.xpath('td')
-                if i[4].text == '不支持' and i[5].text == '支持' and '中国' not in i[2].xpath('a'):  # 国外 & https & POST
+                if i[4].text == '支持' and i[5].text == '支持' and '中国' not in i[2].xpath('a'):  # 国外 & https & POST
                     href = dict(i[0].xpath('a')[0].attrib).get('href')
                     ips.append(self.config.PROXY_URL + href)
             return ips

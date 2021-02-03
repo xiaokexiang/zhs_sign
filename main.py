@@ -2,40 +2,8 @@ import config
 import json
 import os
 import requests
-import time
-from lxml import etree
+import util
 from proxy import IpProxy
-
-
-def now():
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-
-
-# 基于server酱推送到微信
-def push(caption, desc, _secret_key_):
-    url = config.PUSH_URL.format(_secret_key_)
-    session = requests.session()
-    data = {'text': caption, 'desp': desc}
-    resp = session.post(url, data)
-    if resp.status_code == 200 and parse(resp.text, 'errmsg', 'success'):
-        print('push message succeed!')
-    else:
-        print(resp.content)
-        print('push message failed!')
-
-
-# 解析响应，并获取key的值和res进行比较，相同返回true，其他情况返回false
-def parse(source, key, res):
-    if not all([source, key, res]):
-        return None
-    body = dict(json.loads(source))
-    value = body.get(key)
-    return (False, True)[value == res or res in value]
-
-
-# 简单判断是不是html
-def is_html(html):
-    return len(etree.HTML(html).xpath("/html/head/title")) > 0
 
 
 class Sign:
@@ -63,15 +31,18 @@ if __name__ == '__main__':
     _response_ = sign.check_in()
     if _response_.status_code != 200:
         title = 'VPN签到： 今日签到失败！代理问题：' + str(_response_.status_code) + ' \r'
-    elif is_html(_response_.text):
+    elif util.is_html(_response_.text):
         title = "VPN签到：你的cookie已经失效！\r"
     else:
         print(dict(json.loads(_response_.text)).get('msg'))
-        if parse(_response_.text, 'msg', '已经'):
+        if util.parse(_response_.text, 'msg', '已经'):
             title = 'VPN签到：您已经签到过，无需再签到！ \r'
         else:
             title = 'VPN签到：恭喜您，今日签到成功！ \r'
     print(title)
     secret_key = os.environ.get('PUSH_KEY')
+    bark_secret_key = os.environ.get('BARK_PUSH_KEY')
     if isinstance(secret_key, str) and len(secret_key) > 0:
-        push(title, now(), secret_key)
+        util.push(title, util.now(), secret_key)
+    if isinstance(bark_secret_key, str) and len(bark_secret_key) > 0:
+        util.push_bark(title, util.now(), bark_secret_key)

@@ -15,4 +15,7 @@ HEADERS = {
 PROXIES = {}
 PROXY_URL = 'https://ip.ihuan.me'
 CHECK_IN_URL = 'https://zhs.today/user/checkin'
-PUSH_URL = 'http://sc.ftqq.com/{0}.send'
+# 基于server酱推送
+SERVER_PUSH_URL = 'http://sc.ftqq.com/{0}.send'
+# 基于bark推送
+BARK_PUSH_URL = 'https://api.day.app/{0}/{1}/{2}?sound=bell'
