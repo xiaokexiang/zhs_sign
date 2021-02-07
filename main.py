@@ -28,13 +28,15 @@ class Sign:
 if __name__ == '__main__':
     sign = Sign()
     title = ''
+    text = util.now()
     _response_ = sign.check_in()
     if _response_.status_code != 200:
         title = 'VPN签到： 今日签到失败！代理问题：' + str(_response_.status_code) + ' \r'
     elif util.is_html(_response_.text):
         title = "VPN签到：你的cookie已经失效！\r"
     else:
-        print(dict(json.loads(_response_.text)).get('msg'))
+        text = dict(json.loads(_response_.text)).get('msg')
+        print('resp: ', text)
         if util.parse(_response_.text, 'msg', '已经'):
             title = 'VPN签到：您已经签到过，无需再签到！ \r'
         else:
@@ -43,6 +45,6 @@ if __name__ == '__main__':
     secret_key = os.environ.get('PUSH_KEY')
     bark_secret_key = os.environ.get('BARK_PUSH_KEY')
     if isinstance(secret_key, str) and len(secret_key) > 0:
-        util.push(title, util.now(), secret_key)
+        util.push(title, text, secret_key)
     if isinstance(bark_secret_key, str) and len(bark_secret_key) > 0:
-        util.push_bark(title, util.now(), bark_secret_key)
+        util.push_bark(title, text, bark_secret_key)
